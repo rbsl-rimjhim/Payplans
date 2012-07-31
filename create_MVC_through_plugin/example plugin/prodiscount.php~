@@ -1,0 +1,67 @@
+<?php 
+/**
+* @copyright	Copyright (C) 2009 - 2009 Ready Bytes Software Labs Pvt. Ltd. All rights reserved.
+* @license	    GNU/GPL, see LICENSE.php
+* @package	    PayPlans
+* @subpackage	Prodiscount
+* @contact 	    payplans@readybytes.in
+*/
+// no direct access
+defined( '_JEXEC' ) or die( 'Restricted access' );
+jimport( 'joomla.filesystem.archive' );
+jimport( 'joomla.document.document' );
+
+class plgPayplansProdiscount extends XiPlugin
+{
+	var $_name = 'Prodiscount';
+	
+	/**
+	 * Tell payplans to load plugin's view,controller,model,table and lib
+	 */
+	public function onPayplansSystemStart()
+	{	
+		//path where all the following files exists
+        	$dir = dirname(__FILE__).DS.'prodiscount'; 
+		
+		//for eg : PayplansHelperLoader::addAutoLoadFile($dir.DS.'FILE_NAME', 'CLASS_NAME');
+       		PayplansHelperLoader::addAutoLoadFile($dir.DS.'view.php', 'PayplansadminViewProdiscount');
+		PayplansHelperLoader::addAutoLoadFile($dir.DS.'controller.php', 'PayplansadminControllerProdiscount');
+                //Load it only if you need any separate table
+		PayplansHelperLoader::addAutoLoadFile($dir.DS.'table.php', 'PayplansTableProdiscount'); 
+		PayplansHelperLoader::addAutoLoadFile($dir.DS.'model.php', 'PayplansModelProdiscount');
+                //Load it only if any library file is needed for this plugin
+		PayplansHelperLoader::addAutoLoadFile($dir.DS.'lib.php', 'PayplansProdiscount');
+		
+        	return true;
+	}
+	
+	/**
+	 * Tell payplans to set plugin template for backend and front end where required
+	 */
+	public function onPayplansViewBeforeRender(XiView $view, $task)
+	{
+		//adding admin-submenu(Discounts) when plugin in enabled
+		if(XiFactory::getApplication()->isAdmin() && XiHelperJoomla::getPluginStatus('prodiscount','payplans')){
+			XiAbstractView::addSubmenus('prodiscount');
+			/**
+                         * Also add a string in administrator-side language file like: 
+			 * COM_PAYPLANS_SM_PRODISCOUNT="Discounts" 
+                         */
+		}
+		
+		//for admin side
+		if(($view instanceof PayplansadminViewProdiscount) && ($task == 'display' || $task == 'edit')){
+			// we need to add the default template overriding paths
+			$templatePaths = $this->_getTemplatePath($this->_name);
+			$view->addPathToView($templatePaths);
+		}
+
+		return true;
+	}
+
+
+        /**
+         * Now catch the trigger on which you want this plugin to work
+	 * and then perform the desired task
+         */	
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<install version="1.5" type="plugin" group="payplans" method="upgrade">
+    <name>Payplans-examplemvc</name>
+	<version>2.2.0.2788</version>
+	<creationDate>june 2010</creationDate>
+	<author>Team Payplans</author>
+	<authorEmail>payplans@readybytes.in</authorEmail>
+	<authorUrl>http://www.readybytes.in</authorUrl>
+	<copyright>2009-11 Ready Bytes Software Labs Pvt. Ltd.</copyright>
+	<license>GNU/GPL</license>
+	<description>Description goes here</description>	
+	<files>
+		<filename plugin="examplemvc">examplemvc.php</filename>
+		<folder>examplemvc</folder>
+	</files>
+</install>
