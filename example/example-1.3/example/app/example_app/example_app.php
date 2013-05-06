@@ -20,7 +20,7 @@ if(defined('_JEXEC')===false) die();
 */
 
 
-class PayplansAppExample extends PayplansApp 
+class PayplansAppExample_app extends PayplansApp 
 {
 	// this variable always helps PayPlans to get the app file location 
 	protected $_location	= __FILE__;
